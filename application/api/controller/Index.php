@@ -95,7 +95,6 @@ class Index extends Controller
     // 编辑信息
     public function edituser(){
         $data = Request::instance() -> param();
-
         $res = db('customer_user') -> where('openid',$data['openid']) -> update($data);
         if($res){
             $result = array(
