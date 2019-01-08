@@ -7,9 +7,27 @@ use think\Db;
 
 class Index extends Controller
 {
+    protected $appid = 'wx1ef2bb050c949665';
+    protected $appSecret = '4dbb77f35224463a2171d68067edf047';
+
     public function index(){
         // dump('111');die;
         return $this -> fetch('Index/index');
+    }
+    // 获取openid
+    public function getopenid(){
+        $data = Request::instance() -> param();
+        $code = $data['code'];
+        $appid = $this -> appid;
+        $appSecret = $this -> appSecret;
+        $url = "https://api.weixin.qq.com/sns/jscode2session?appid=$appid&secret=$appSecret&js_code=$code&grant_type=authorization_code";
+        //通过code换取网页授权access_token
+        $weixin =  file_get_contents($url); 
+        $jsondecode = json_decode($weixin); //对JSON格式的字符串进行编码
+        $array = get_object_vars($jsondecode);//转换成数组
+        $openid = $array['openid'];//输出openid
+        echo json_encode($openid);
+        // var_dump($code);die;
     }
 
     // 用户注册
@@ -19,11 +37,13 @@ class Index extends Controller
         $data = Request::instance() -> param();
         $data['time'] = time();
 
-        $isUser = Db::name('customer_user') -> where('phone',$data['phone']) -> whereOr('openid',$data['openid']) -> select();
+        // $isUser = Db::name('customer_user') -> where('phone',$data['phone']) -> whereOr('openid',$data['openid']) -> select();
+        $isUser = Db::name('customer_user') -> where('openid',$data['openid']) -> select();
+        
         if($isUser){
             $result = array(
                 'content' => '您已注册！',
-                'status'  => 0
+                'status'  => 1
             );
             echo json_encode($result);
         }else{
@@ -49,12 +69,28 @@ class Index extends Controller
     public function getuserinfo(){
         $data = Request::instance() -> get();
         $res = db('customer_user') -> where('openid',$data['openid']) -> find();
+        if($res['phone']){
+            $res['phone'] = substr_replace($res['phone'], '****', 3, 4);
+        }
         if($res){
             echo json_encode($res);
         }else{
             echo json_encode(null);
         }
     }
+
+    // 绑定电话号码
+    public function bindphone(){
+        $data = Request::instance() -> param();
+        if($data['openid']){
+            $res = db('customer_user') -> where('openid',$data['openid']) -> update(['phone' => $data['phone']]);
+            if($res){
+                echo json_encode($res);
+            }else{
+                echo json_encode(null);
+            }
+        }
+    } 
 
     // 编辑信息
     public function edituser(){

@@ -351,7 +351,9 @@
                             <h3 class="block-title">测试接口</h3>
                         </div>
                         <div class="block-content tab-content">
+                            <button class="btn btn-success" id="getOpenid">获取openid</button>
                             <button class="btn btn-success" id="register">用户注册</button>
+                            <button class="btn btn-success" id="bindphone">绑定电话号码</button>
                             <button class="btn btn-success" id="getUserInfo">获取用户信息</button>
                             <!-- <button class="btn btn-success" id="editUser">编辑信息</button> -->
                             <button class="btn btn-success" id="periodSetting">经期设置</button>
@@ -359,7 +361,7 @@
                             <button class="btn btn-success" id="ispregnant">是否怀孕</button>
                             <button class="btn btn-success" id="leaveMessage">用户留言</button>
                             <button class="btn btn-success" id="InquiryExpress">查询快递信息</button>
-                            <a href="{:url('api/Index/daochu')}" class="btn btn-success">导出Excel</a>
+                            <!-- <a href="{:url('api/Index/daochu')}" class="btn btn-success">导出Excel</a> -->
 
                             <!-- 收货地址 -->
                             <div data-toggle="distpicker" id="sjld" style="display: none;float: left;margin-top: 20px;">
@@ -631,6 +633,21 @@
     
 <!-- ajax请求 -->
 <script>
+    // 获取openid
+    $('#getOpenid').click(function(){
+        $.ajax({
+          type:"get",
+          url:"{:url('api/Index/getopenid')}",
+          data:{
+            code:'071b6nDJ10zJo30suGDJ1swxDJ1b6nDH'
+          },
+          success:function(data){
+              var data = JSON.parse(data);
+              alert(data);
+          }
+        });
+    });
+
     // 用户注册
     $('#register').click(function(){
         $.ajax({
@@ -648,6 +665,27 @@
           success:function(data){
               var data = JSON.parse(data);
               alert(data.content);
+          }
+        });
+    });
+
+    // 绑定电话号码
+    $('#bindphone').click(function(){
+        $.ajax({
+          type:"get",
+          url:"{:url('api/Index/bindphone')}",
+          data:{
+            openid:'o37294ps5fky9t3frBDIAt8H20qM',
+            phone:'18906050278'
+          },
+          success:function(data){
+              var data = JSON.parse(data);
+              if(data){
+                alert(data);
+              }else{
+                alert('没有此用户');
+              }
+              
           }
         });
     });
