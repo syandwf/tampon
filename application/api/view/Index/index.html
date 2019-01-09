@@ -355,6 +355,7 @@
                             <button class="btn btn-success" id="register">用户注册</button>
                             <button class="btn btn-success" id="bindphone">绑定电话号码</button>
                             <button class="btn btn-success" id="getUserInfo">获取用户信息</button>
+                            <button class="btn btn-success" id="isperiod">用户是否已经设置经期</button>
                             <!-- <button class="btn btn-success" id="editUser">编辑信息</button> -->
                             <button class="btn btn-success" id="periodSetting">经期设置</button>
                             <button class="btn btn-success" id="receiveAddress">添加收货地址</button>
@@ -712,6 +713,21 @@
                 alert('没有此用户');
               }
               
+          }
+        });
+    });
+
+    // 判断用户是否已经设置经期信息
+    $('#isperiod').click(function(){
+        $.ajax({
+          type:"get",
+          url:"{:url('api/Index/isperiod')}",
+          data:{
+            openid:'openid20181115',
+          },
+          success:function(data){
+              var data = JSON.parse(data);
+              alert(data);
           }
         });
     });

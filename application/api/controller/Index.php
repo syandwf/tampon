@@ -111,6 +111,25 @@ class Index extends Controller
         }
     }
 
+    // 用户是否已经设置经期
+    public function isperiod(){
+        $data = Request::instance() -> param();
+        $res = db('customer_periodsetting') -> where('openid',$data['openid']) -> find();
+        if($res){
+            $result = array(
+                'content' => '已经设置了经期',
+                'status'  => 1
+            );
+            echo json_encode($result);
+        }else{
+            $result = array(
+                'content' => '还未设置经期',
+                'status'  => 0
+            );
+            echo json_encode($result);
+        }
+    }
+
     // 经期设置
     public function menstrualrecord(){
         $data = Request::instance() -> param();
