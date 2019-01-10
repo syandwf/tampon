@@ -356,8 +356,8 @@
                             <button class="btn btn-success" id="bindphone">绑定电话号码</button>
                             <button class="btn btn-success" id="getUserInfo">获取用户信息</button>
                             <button class="btn btn-success" id="isperiod">用户是否已经设置经期</button>
+                            <button class="btn btn-success" id="setPeriod">设置经期</button>
                             <!-- <button class="btn btn-success" id="editUser">编辑信息</button> -->
-                            <button class="btn btn-success" id="periodSetting">经期设置</button>
                             <button class="btn btn-success" id="receiveAddress">添加收货地址</button>
                             <button class="btn btn-success" id="ispregnant">是否怀孕</button>
                             <button class="btn btn-success" id="leaveMessage">用户留言</button>
@@ -753,11 +753,11 @@
         });
     });
 
-    // 月经期设置
-    $('#periodSetting').click(function(){
+    // 设置经期
+    $('#setPeriod').click(function(){
         $.ajax({
           type:"get",
-          url:"{:url('api/Index/menstrualrecord')}",
+          url:"{:url('api/Index/setPeriod')}",
           data:{
             openid:'openid20181115',
             name:'马妈',

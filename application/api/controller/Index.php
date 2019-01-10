@@ -131,28 +131,27 @@ class Index extends Controller
     }
 
     // 经期设置
-    public function menstrualrecord(){
+    public function setPeriod(){
         $data = Request::instance() -> param();
         $data['before'] = strtotime($data['before']);
         $data['time'] = time();
+        $data['age'] = 18;      //默认18岁
+        $data['sex'] = 0;       //默认女生
+        var_dump($data);die;
         if($data['isown'] == 0){
-            $isUser = db('customer_periodsetting') -> where('openid = :openid and isown = 0') -> bind(['openid'=>$data['openid']]) -> select();
+            $isUser = db('customer_periodsetting') -> where('openid = :openid and isown = 0') -> bind(['openid'=>$data['openid']]) -> find();
             if($isUser){
-                $result = array(
-                    'content' => '主账号已添加！',
-                    'status'  => 0
-                );
-                echo json_encode($result); 
+                $this->updateSetPeriod($data);
             }else{
-                $this->addMenstrualrecord($data);
+                $this->addSetPeriod($data);
             }
         }else{
-            $this->addMenstrualrecord($data);
+            $this->addSetPeriod($data);
         }
     }
 
     // 插入月经设置
-    public function addMenstrualrecord($data){
+    public function addSetPeriod($data){
         $res = db('customer_periodsetting') -> insert($data);
         if($res){
             $result = array(
@@ -163,6 +162,24 @@ class Index extends Controller
         }else{
             $result = array(
                 'content' => '添加失败！',
+                'status'  => 0
+            );
+            echo json_encode($result); 
+        }
+    }
+
+    // 修改月经设置
+    public function updateSetPeriod($data){
+        $res = db('customer_periodsetting') -> update($data);
+        if($res){
+            $result = array(
+                'content' => '修改成功！',
+                'status'  => 1
+            );
+            echo json_encode($result); 
+        }else{
+            $result = array(
+                'content' => '修改失败！',
                 'status'  => 0
             );
             echo json_encode($result); 
