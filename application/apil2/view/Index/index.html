@@ -351,18 +351,13 @@
                             <h3 class="block-title">测试接口</h3>
                         </div>
                         <div class="block-content tab-content">
-                            <h5>用户接口：</h5><br/>
                             <button class="btn btn-success" id="getOpenid">获取openid</button>
                             <button class="btn btn-success" id="register">用户注册</button>
                             <button class="btn btn-success" id="bindphone">绑定电话号码</button>
                             <button class="btn btn-success" id="getUserInfo">获取用户信息</button>
-                            <button class="btn btn-success" id="isRegister">用户是否注册</button><br/><br/>
-                            <h5>记录模块接口：</h5><br/>
                             <button class="btn btn-success" id="isperiod">用户是否已经设置经期</button>
                             <button class="btn btn-success" id="setPeriod">设置经期</button>
-                            <button class="btn btn-success" id="getPeriod">获取设置经期数据</button>
-                            <button class="btn btn-success" id="forecastPeriod">(下个月)经期预测</button>
-                            <br/><br/><br/>
+                            <!-- <button class="btn btn-success" id="editUser">编辑信息</button> -->
                             <button class="btn btn-success" id="receiveAddress">添加收货地址</button>
                             <button class="btn btn-success" id="ispregnant">是否怀孕</button>
                             <button class="btn btn-success" id="leaveMessage">用户留言</button>
@@ -380,6 +375,10 @@
                                 <input type="text" id="address"/>
                             </div>
 
+
+
+                            <!-- 111111111111111111111111111111111111111111111111111111 -->
+                            <button class="btn btn-success" id="Chaxun">查询</button>
                         </div>
                     </div>
                 </div>
@@ -639,6 +638,23 @@
     
 <!-- ajax请求 -->
 <script>
+    $('#Chaxun').click(function(){
+            $.ajax({
+            type:"get",
+            url:"{:url('apil2/Index/chaxun')}",
+            data:{
+                id:1
+            },
+            success:function(data){
+                var data = JSON.parse(data);
+                console.log(data);
+                alert(data);
+            }
+            });
+        });
+
+
+    // 1111111111111111111111111111111111111111111111111
     // 获取openid
     $('#getOpenid').click(function(){
         $.ajax({
@@ -722,21 +738,6 @@
         });
     });
 
-    // 判断用户是否注册
-    $('#isRegister').click(function(){
-        $.ajax({
-          type:"get",
-          url:"{:url('api/Index/isRegister')}",
-          data:{
-            openid:'openid20181115'
-          },
-          success:function(data){
-            var data = JSON.parse(data);
-            alert(data.content);       
-          }
-        });
-    });
-
     // 判断用户是否已经设置经期信息
     $('#isperiod').click(function(){
         $.ajax({
@@ -789,39 +790,6 @@
             cycle:28,
             law:1,
             ispregnant:0,
-          },
-          success:function(data){
-              var data = JSON.parse(data);
-              alert(data.content);
-          }
-        });
-    });
-
-    // 获取经期设置的数据
-    $('#getPeriod').click(function(){
-        $.ajax({
-          type:"get",
-          url:"{:url('api/Index/getPeriod')}",
-          data:{
-            openid:'openid20181115'
-          },
-          success:function(data){
-              var data = JSON.parse(data);
-              alert(data.content);
-          }
-        });
-    });
-
-    // (下个月)经期预测
-    $('#forecastPeriod').click(function(){
-        $.ajax({
-          type:"get",
-          url:"{:url('api/Index/forecastPeriod')}",
-          data:{
-            openid:'o37294ps5fky9t3frBDIAt8H20qM',
-            curMonth:'2019-1',
-            // nextMonth:'2019-1',
-            tpye:1      //1、当前月或者往下一个月2、往前一个月
           },
           success:function(data){
               var data = JSON.parse(data);

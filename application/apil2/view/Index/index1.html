@@ -90,7 +90,7 @@
             'curr_params': [],
             'layer': {"type":2,"area":["80%","90%"],"shadeClose":true,"isOutAnim":false,"anim":-1}        };
     </script>
-<link rel="stylesheet" href="/static/libs/layer/skin/default/layer.css?v=3.0.3303" id="layuicss-skinlayercss"></head>
+<link rel="stylesheet" href="http://dev.tampon.com/public/static/libs/layer/skin/default/layer.css?v=3.0.3303" id="layuicss-skinlayercss"></head>
 <body>
 <!-- Page Container -->
 <div id="page-container" class="sidebar-l sidebar-o side-scroll header-navbar-fixed ">
@@ -305,7 +305,7 @@
                     <a href="javascript:void(0);" data-module-id="236" data-module="cms" data-controller="index" target="_self" class="top-menu"><i class="fa fa-fw fa-newspaper-o"></i> 门户</a>
                 </li>
             <li class="hidden-xs hidden-sm ">
-                    <a href="__ROOT__/admin.php/customer/customerlist/index.html" data-module-id="333" target="_self"><i class="fa fa-fw fa-home"></i> 客户管理</a>
+                    <a href="javascript:void(0);" data-module-id="333" data-module="customer" data-controller="admin" target="_self" class="top-menu"><i class="fa fa-fw fa-home"></i> 客户管理</a>
                 </li>
             <li class="hidden-xs hidden-sm active">
                 <a class="top-menu"><i class="fa fa-fw fa-home"></i> 测试接口</a>
@@ -351,23 +351,13 @@
                             <h3 class="block-title">测试接口</h3>
                         </div>
                         <div class="block-content tab-content">
-                            <h5>用户接口：</h5><br/>
-                            <button class="btn btn-success" id="getOpenid">获取openid</button>
                             <button class="btn btn-success" id="register">用户注册</button>
-                            <button class="btn btn-success" id="bindphone">绑定电话号码</button>
                             <button class="btn btn-success" id="getUserInfo">获取用户信息</button>
-                            <button class="btn btn-success" id="isRegister">用户是否注册</button><br/><br/>
-                            <h5>记录模块接口：</h5><br/>
-                            <button class="btn btn-success" id="isperiod">用户是否已经设置经期</button>
-                            <button class="btn btn-success" id="setPeriod">设置经期</button>
-                            <button class="btn btn-success" id="getPeriod">获取设置经期数据</button>
-                            <button class="btn btn-success" id="forecastPeriod">(下个月)经期预测</button>
-                            <br/><br/><br/>
+                            <!-- <button class="btn btn-success" id="editUser">编辑信息</button> -->
+                            <button class="btn btn-success" id="periodSetting">经期设置</button>
                             <button class="btn btn-success" id="receiveAddress">添加收货地址</button>
                             <button class="btn btn-success" id="ispregnant">是否怀孕</button>
                             <button class="btn btn-success" id="leaveMessage">用户留言</button>
-                            <button class="btn btn-success" id="InquiryExpress">查询快递信息</button>
-                            <!-- <a href="{:url('api/Index/daochu')}" class="btn btn-success">导出Excel</a> -->
 
                             <!-- 收货地址 -->
                             <div data-toggle="distpicker" id="sjld" style="display: none;float: left;margin-top: 20px;">
@@ -452,7 +442,7 @@
                             </a>
                         </div>
                         <div class="col-xs-6 col-sm-3">
-                            <a href="__ROOT__/admin.php/customer/customerlist/index.html" data-module-id="333" target="_self">
+                            <a class="block block-rounded top-menu" href="javascript:void(0);" data-module-id="333" data-module="customer" data-controller="admin" target="_self">
                                 <div class="block-content text-white bg-primary-dark">
                                     <i class="fa fa-fw fa-home fa-2x"></i>
                                     <div class="font-w600 push-15-t push-15">客户管理</div>
@@ -571,7 +561,7 @@
         var table_left_body_col = builder_table_left_body.find('col');
         var table_right_body_col = builder_table_right_body.find('col');
 
-        $('#builder-table-wrapper').css('max-height', ($(window).height() - 380)+'px');
+                    $('#builder-table-wrapper').css('max-height', ($(window).height() - 380)+'px');
         
         table_body.css('max-height', $('#builder-table-wrapper').outerHeight() - 50);
 
@@ -639,21 +629,6 @@
     
 <!-- ajax请求 -->
 <script>
-    // 获取openid
-    $('#getOpenid').click(function(){
-        $.ajax({
-          type:"get",
-          url:"{:url('api/Index/getopenid')}",
-          data:{
-            code:'071b6nDJ10zJo30suGDJ1swxDJ1b6nDH'
-          },
-          success:function(data){
-              var data = JSON.parse(data);
-              alert(data);
-          }
-        });
-    });
-
     // 用户注册
     $('#register').click(function(){
         $.ajax({
@@ -671,27 +646,6 @@
           success:function(data){
               var data = JSON.parse(data);
               alert(data.content);
-          }
-        });
-    });
-
-    // 绑定电话号码
-    $('#bindphone').click(function(){
-        $.ajax({
-          type:"get",
-          url:"{:url('api/Index/bindphone')}",
-          data:{
-            openid:'o37294ps5fky9t3frBDIAt8H20qM',
-            phone:'18906050278'
-          },
-          success:function(data){
-              var data = JSON.parse(data);
-              if(data){
-                alert(data);
-              }else{
-                alert('没有此用户');
-              }
-              
           }
         });
     });
@@ -722,36 +676,6 @@
         });
     });
 
-    // 判断用户是否注册
-    $('#isRegister').click(function(){
-        $.ajax({
-          type:"get",
-          url:"{:url('api/Index/isRegister')}",
-          data:{
-            openid:'openid20181115'
-          },
-          success:function(data){
-            var data = JSON.parse(data);
-            alert(data.content);       
-          }
-        });
-    });
-
-    // 判断用户是否已经设置经期信息
-    $('#isperiod').click(function(){
-        $.ajax({
-          type:"get",
-          url:"{:url('api/Index/isperiod')}",
-          data:{
-            openid:'openid20181115',
-          },
-          success:function(data){
-              var data = JSON.parse(data);
-              alert(data);
-          }
-        });
-    });
-
     // 编辑信息
     $('#editUser').click(function(){
         $.ajax({
@@ -773,11 +697,11 @@
         });
     });
 
-    // 设置经期
-    $('#setPeriod').click(function(){
+    // 月经期设置
+    $('#periodSetting').click(function(){
         $.ajax({
           type:"get",
-          url:"{:url('api/Index/setPeriod')}",
+          url:"{:url('api/Index/menstrualrecord')}",
           data:{
             openid:'openid20181115',
             name:'马妈',
@@ -789,39 +713,6 @@
             cycle:28,
             law:1,
             ispregnant:0,
-          },
-          success:function(data){
-              var data = JSON.parse(data);
-              alert(data.content);
-          }
-        });
-    });
-
-    // 获取经期设置的数据
-    $('#getPeriod').click(function(){
-        $.ajax({
-          type:"get",
-          url:"{:url('api/Index/getPeriod')}",
-          data:{
-            openid:'openid20181115'
-          },
-          success:function(data){
-              var data = JSON.parse(data);
-              alert(data.content);
-          }
-        });
-    });
-
-    // (下个月)经期预测
-    $('#forecastPeriod').click(function(){
-        $.ajax({
-          type:"get",
-          url:"{:url('api/Index/forecastPeriod')}",
-          data:{
-            openid:'o37294ps5fky9t3frBDIAt8H20qM',
-            curMonth:'2019-1',
-            // nextMonth:'2019-1',
-            tpye:1      //1、当前月或者往下一个月2、往前一个月
           },
           success:function(data){
               var data = JSON.parse(data);
@@ -899,21 +790,8 @@
         });
     });
 
-    // 查询快递信息
-    $('#InquiryExpress').click(function(){
-        $.ajax({
-          type:"get",
-          url:"{:url('api/Index/InquiryExpress')}",
-          data:{
-            waybill_no:'3834541968706',
-            exp_company_code:'yd'
-          },
-          success:function(data){
-              var data = JSON.parse(data);
-              alert(data.content);
-          }
-        });
-    });
+
+    
 
 </script>
     

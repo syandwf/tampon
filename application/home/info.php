@@ -4,17 +4,17 @@
  */
 return [
     // 模块名[必填]
-    'name'        => 'customer',
+    'name'        => 'home',
     // 模块标题[必填]
-    'title'       => '客户',
+    'title'       => '主页',
     // 模块唯一标识[必填]，格式：模块名.开发者标识.module
-    'identifier'  => 'customer.feng.module',
+    'identifier'  => 'home.feng.module',
     // 开发者[必填]
     'author'      => 'WangWenFeng',
     // 版本[必填],格式采用三段式：主版本号.次版本号.修订版本号
     'version'     => '1.0.0',
     // 模块描述[必填] 
-    'description' => '客户模块',
+    'description' => '主页模块',
     //字体图标
     'icon'        => 'fa fa-fw fa-user',
     // 模块依赖[可选]，格式[[模块名, 模块唯一标识, 依赖版本, 对比方式]]
@@ -25,15 +25,11 @@ return [
     'need_plugin' => [],
     // 数据表[有数据库表时必填]
     'table' => [
-        'customer_list',
-        'customer_periodrecord',
-        'customer_periodsetting',
-        'customer_leave_message',
-        'customer_express_order',
-        'customer_forever_order',
-        'customer_order',
-        'customer_user',
-        'customer_receive_address'
+        'admin_attachment',          //系统表,查找图片的path
+        'home_advlist',
+        'home_boxlist',
+        'home_boxprice',
+        'home_boxbrand'             //盒子品牌
     ],
     // 原始数据库表前缀
     // 用于在导入模块sql时，将原有的表前缀转换成系统的表前缀
